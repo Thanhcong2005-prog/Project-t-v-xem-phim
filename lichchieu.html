@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch Chiếu Phim</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url(./img/pexels-photo-17082082.webp);
+            color: #fff;
+        }
+
+        header {
+            background-color: #1f1f1f;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e50914;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        nav ul li a:hover {
+            color: #e50914;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .schedule-section {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .schedule-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .schedule-table th, .schedule-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .schedule-table th {
+            background-color: #1f1f1f;
+            color: #fff;
+        }
+
+        .schedule-table td {
+            background-color: #2c2c2c;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #1f1f1f;
+            color: #aaa;
+            margin-top: 20px;
+            /* Đóng khung và hiệu ứng hover cho các mục trong Navigation */
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav ul li a:hover {
+    background-color: #e50914;
+    color: #fff;
+}
+
+/* Đóng khung cho các mục "Lịch Chiếu" và "Top Phim" */
+.schedule-section, .top-movie-section {
+    border: 2px solid #e50914;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #1f1f1f;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+/* Hiệu ứng hover cho các card phim */
+.top-movie-card, .movie-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.top-movie-card:hover, .movie-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Cải thiện hiệu ứng hover cho các bảng trong lịch chiếu */
+.schedule-table td:hover, .schedule-table th:hover {
+    background-color: #e50914;
+    color: #fff;
+}
+
+/* Thêm hiệu ứng hover cho nút "Đặt Vé" */
+button:hover {
+    background-color: #b00710;
+}
+
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">🎬 TCD Cinema</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Trang Chủ</a></li>
+                <li><a href="./topphim.html">Top Phim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="schedule-section">
+            <h2>Lịch Chiếu Phim</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Phim</th>
+                        <th>Ngày Chiếu</th>
+                        <th>Giờ Chiếu</th>
+                        <th>Địa Điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Red One: Mật Mã Đỏ</td>
+                        <td>10/01/2025</td>
+                        <td>19:00</td>
+                        <td>Rạp A</td>
+                    </tr>
+                    <tr>
+                        <td>Venom: Kèo Cuối</td>
+                        <td>10/01/2025</td>
+                        <td>21:30</td>
+                        <td>Rạp A</td>
+                    </tr>
+                    <tr>
+                        <td>Đôi Bạn Học Yêu</td>
+                        <td>10/01/2025</td>
+                        <td>18:00</td>
+                        <td>Rạp B</td>
+                    </tr>
+                    <tr>
+                        <td>Cô Dâu Hào Môn</td>
+                        <td>12/01/2025</td>
+                        <td>17:00</td>
+                        <td>Rạp B</td>
+                    </tr>
+                    <tr>
+                        <td>Ted Yod: Quỷ Ăn Tạng 2</td>
+                        <td>12/01/2025</td>
+                        <td>21:00</td>
+                        <td>Rạp B</td>
+                    </tr>
+                    <tr>
+                        <td>Mộ Đom Đóm</td>
+                        <td>13/01/2025</td>
+                        <td>19:00</td>
+                        <td>Rạp A</td>
+                    </tr>
+                    <tr>
+                        <td>Đố Anh Còng Được Tôi</td>
+                        <td>14/01/2025</td>
+                        <td>20:00</td>
+                        <td>Rạp B</td>
+                    </tr>
+                    <tr>
+                        <td>Conan Movie 27</td>
+                        <td>14/01/2025</td>
+                        <td>18:00</td>
+                        <td>Rạp A</td>
+                    </tr>
+                    <tr>
+                        <td>Gia Tài Của NgoạiNgoại</td>
+                        <td>15/01/2025</td>
+                        <td>19:00</td>
+                        <td>Rạp A</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 TCD Cinema. All rights reserved.</p>
+    </footer>
+</body>
+</html>

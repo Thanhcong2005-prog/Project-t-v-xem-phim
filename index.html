@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phim Đang Chiếu</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-image: url(./img/pexels-photo-7991579.webp);
+        color: #fff;
+      }
+
+      header {
+        background-color: #1f1f1f;
+        padding: 10px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #e50914;
+      }
+
+      nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 20px;
+      }
+
+      nav ul li {
+        display: inline-block;
+        border: 2px solid #444;
+        border-radius: 5px;
+        padding: 10px 20px;
+        transition: all 0.3s ease;
+        background-color: #1f1f1f;
+      }
+
+      nav ul li a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      nav ul li a:hover {
+        color: #e50914;
+      }
+
+      nav ul li:hover {
+        background-color: #333;
+        border-color: #e50914;
+      }
+
+      main {
+        padding: 20px;
+      }
+
+      .movie-section {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .movie-section h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+
+      .movie-carousel {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+      }
+
+      .movie-card {
+        background-color: #1f1f1f;
+        border-radius: 10px;
+        overflow: hidden;
+        flex: 0 0 250px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+
+      .movie-card img {
+        width: 100%;
+        height: 350px;
+        object-fit: cover;
+      }
+
+      .movie-info {
+        padding: 10px;
+      }
+
+      .movie-info h3 {
+        font-size: 1.2rem;
+        margin: 0 0 5px;
+      }
+
+      .movie-info p {
+        font-size: 0.9rem;
+        margin: 0;
+        color: #aaa;
+      }
+
+      .rating {
+        margin-top: 5px;
+        font-size: 0.9rem;
+        color: #f5c518;
+      }
+
+      .age-rating {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #fff;
+      }
+
+      .pre-order {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #e50914;
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: bold;
+        padding: 5px 10px;
+        border-radius: 5px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 10px;
+        background-color: #1f1f1f;
+        color: #aaa;
+        margin-top: 20px;
+      }
+
+      .movie-card button {
+        background-color: #e50914;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .movie-card button:hover {
+        background-color: #b00710;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .form-container {
+        max-width: 500px;
+        margin: 20px auto;
+        background-color: #1f1f1f;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .form-container input,
+      .form-container button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 5px;
+      }
+
+      .form-container button {
+        background-color: #b00710;
+        color: white;
+        font-size: 1rem;
+      }
+
+      .form-container button:hover {
+        background-color: #b00710;
+      }
+
+      .seating-chart {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .seat {
+        width: 40px;
+        height: 40px;
+        background-color: #444;
+        border-radius: 5px;
+        text-align: center;
+        line-height: 40px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .seat.selected {
+        background-color: #e50914;
+      }
+
+      .seat:disabled {
+        background-color: #333;
+        cursor: not-allowed;
+      }
+
+      .seat.available:hover {
+        background-color: #e50914;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">🎬 TCD Cinema</div>
+      <nav>
+        <ul>
+          <li><a href="./lichchieu.html">Lịch Chiếu</a></li>
+          <li><a href="./topphim.html">Top Phim</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="movie-section">
+        <h2>Phim Đang Chiếu</h2>
+        <div class="movie-carousel">
+          <div class="movie-card">
+            <div class="age-rating">16+</div>
+            <img
+              src="./img/phim-chieu-rap-hay-1.jpg"
+              alt="Red One: Mật Mã Đỏ"
+            />
+            <div class="movie-info">
+              <h3>Red One: Mật Mã Đỏ</h3>
+              <p>Hành Động, Tội Phạm</p>
+              <p class="price">Giá vé: 150.000VND</p>
+              <div class="rating">⭐ 8.8</div>
+              <button onclick="startBooking()">Đặt Vé</button>
+            </div>
+          </div>
+          <div class="movie-card">
+            <div class="age-rating">13+</div>
+            <img src="./img/phim-chieu-rap-hay-2.jpg" alt="Venom: Kèo Cuối" />
+            <div class="movie-info">
+              <h3>Venom: Kèo Cuối</h3>
+              <p>Hành Động, Viễn Tưởng</p>
+              <p class="price">Giá vé: 100.000VND</p>
+              <div class="rating">⭐ 8.5</div>
+              <button onclick="startBooking()">Đặt Vé</button>
+            </div>
+          </div>
+          <div class="movie-card">
+            <div class="age-rating">18+</div>
+            <img src="./img/phim-chieu-rap-hay-3.jpg" alt="Đôi Bạn Học Yêu" />
+            <div class="movie-info">
+              <h3>Đôi Bạn Học Yêu</h3>
+              <p>Lãng Mạn, Hài</p>
+              <p class="price">Giá vé: 85.000VND</p>
+              <div class="rating">⭐ 8.7</div>
+              <button onclick="startBooking()">Đặt Vé</button>
+            </div>
+          </div>
+          <div class="movie-card">
+            <div class="age-rating">16+</div>
+            <img src="./img/phim-chieu-rap-hay-4.jpg" alt="Cô Dâu Hào Môn" />
+            <div class="movie-info">
+              <h3>Cô Dâu Hào Môn</h3>
+              <p>Lãng Mạn, Chính Kịch</p>
+              <p class="price">Giá vé: 90.000VND</p>
+              <div class="rating">⭐ 8.6</div>
+              <button onclick="startBooking()">Đặt Vé</button>
+            </div>
+          </div>
+          <div class="movie-card">
+            <div class="age-rating">13+</div>
+            <img
+              src="./img/phim-chieu-rap-hay-5.jpg"
+              alt="Ted Yod: Quỷ Ăn Tạng 2"
+            />
+            <div class="movie-info">
+              <h3>Ted Yod: Quỷ Ăn Tạng 2</h3>
+              <p>Kinh Dị, Hành Động</p>
+              <p class="price">Giá vé: 135.000VND</p>
+              <div class="rating">⭐ 8.9</div>
+              <button onclick="startBooking()">Đặt Vé</button>
+            </div>
+          </div>
+          <div class="movie-card">
+            <div class="age-rating">18+</div>
+            <img src="./img/phim-chieu-rap-hay-6.jpg" alt="Mộ Đom Đóm" />
+            <div class="movie-info">
+              <h3>Mộ Đom Đóm</h3>
+              <p>Hành Động, Kinh Dị</p>
+              <p class="price">Giá vé: 150.000VND</p>
+              <div class="rating">⭐ 9.0</div>
+              <button onclick="startBooking()">Đặt Vé</button>
+            </div>
+          </div>
+          <div class="movie-card">
+            <div class="age-rating">16+</div>
+            <img
+              src="./img/phim-chieu-rap-hay-7.jpg"
+              alt="Đố Anh Còng Được Tôi"
+            />
+            <div class="movie-info">
+              <h3>Đố Anh Còng Được Tôi</h3>
+              <p>Hài, Tình Cảm</p>
+              <p class="price">Giá vé: 85.000VND</p>
+              <div class="rating">⭐ 8.5</div>
+              <button onclick="startBooking()">Đặt Vé</button>
+            </div>
+          </div>
+          <div class="movie-card">
+            <div class="age-rating">13+</div>
+            <img src="./img/phim-chieu-rap-hay-8.jpg" alt="Conan Movie 27" />
+            <div class="movie-info">
+              <h3>Conan Movie 27</h3>
+              <p>Hành Động, Tội Phạm</p>
+              <p class="price">Giá vé: 150.000VND</p>
+              <div class="rating">⭐ 9.3</div>
+              <button onclick="startBooking()">Đặt Vé</button>
+            </div>
+          </div>
+          <div class="movie-card">
+            <div class="age-rating">18+</div>
+            <img src="./img/phim-chieu-rap-hay-9.jpg" alt="Gia Tài Của Ngoại" />
+            <div class="movie-info">
+              <h3>Gia Tài Của Ngoại</h3>
+              <p>Hài, Lãng Mạn</p>
+              <p class="price">Giá vé: 140.000VND</p>
+              <div class="rating">⭐ 8.7</div>
+              <button onclick="startBooking()">Đặt Vé</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Phần chọn chỗ ngồi -->
+      <section id="seat-selection" class="hidden">
+        <div class="form-container">
+          <h2>Chọn Chỗ Ngồi</h2>
+          <p>Chọn chỗ ngồi của bạn:</p>
+          <div class="seating-chart">
+            <div class="seat available" onclick="selectSeat(this)">A1</div>
+            <div class="seat available" onclick="selectSeat(this)">A2</div>
+            <div class="seat available" onclick="selectSeat(this)">A3</div>
+            <div class="seat available" onclick="selectSeat(this)">A4</div>
+            <div class="seat available" onclick="selectSeat(this)">A5</div>
+            <div class="seat available" onclick="selectSeat(this)">B1</div>
+            <div class="seat available" onclick="selectSeat(this)">B2</div>
+            <div class="seat available" onclick="selectSeat(this)">B3</div>
+            <div class="seat available" onclick="selectSeat(this)">B4</div>
+            <div class="seat available" onclick="selectSeat(this)">B5</div>
+            <div class="seat available" onclick="selectSeat(this)">C1</div>
+            <div class="seat available" onclick="selectSeat(this)">C2</div>
+            <div class="seat available" onclick="selectSeat(this)">C3</div>
+            <div class="seat available" onclick="selectSeat(this)">C4</div>
+            <div class="seat available" onclick="selectSeat(this)">C5</div>
+            <!-- More rows can be added in a similar manner -->
+          </div>
+
+          <button onclick="proceedToBooking()">Tiếp Tục</button>
+        </div>
+      </section>
+
+      <section id="booking-form" class="hidden">
+        <div class="form-container">
+          <h2>Thông Tin Đặt Vé</h2>
+          <form onsubmit="submitBooking(event)">
+            <input
+              type="text"
+              id="user-name"
+              placeholder="Tên của bạn"
+              required
+            />
+            <input
+              type="email"
+              id="user-email"
+              placeholder="Email của bạn"
+              required
+            />
+            <button type="submit">Tiếp Tục</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="payment-form" class="hidden">
+        <div class="form-container">
+          <h2>Thanh Toán</h2>
+          <p>Vui lòng nhập thông tin thanh toán</p>
+          <form onsubmit="submitPayment(event)">
+            <input type="text" placeholder="Số thẻ tín dụng" required />
+            <input type="text" placeholder="Tên trên thẻ" required />
+            <input type="text" placeholder="Ngày hết hạn (MM/YY)" required />
+            <input type="text" placeholder="CVV" required />
+            <button type="submit">Thanh Toán</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="success-message" class="hidden">
+        <div class="form-container">
+          <h2>Đặt Vé Thành Công!</h2>
+          <p>Cảm ơn bạn đã đặt vé. Chúc bạn xem phim vui vẻ!</p>
+        </div>
+        <!-- Thêm lớp overlay để làm tối nền khi mở modal -->
+        <div
+          id="modal-overlay"
+          class="hidden"
+          style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+          "
+        ></div>
+
+        <script>
+          function openModal(title, description, price) {
+            document.getElementById("modal-movie-title").textContent = title;
+            document.getElementById("modal-movie-description").textContent =
+              description;
+            document.getElementById("modal-movie-price").textContent =
+              "Giá vé: " + price;
+            document.getElementById("movie-modal").classList.remove("hidden");
+            document.getElementById("modal-overlay").classList.remove("hidden");
+          }
+
+          function closeModal() {
+            document.getElementById("movie-modal").classList.add("hidden");
+            document.getElementById("modal-overlay").classList.add("hidden");
+          }
+
+          function proceedToSeatSelection() {
+            closeModal();
+            startBooking(); // Chuyển sang màn hình chọn chỗ ngồi
+          }
+
+          // Cập nhật sự kiện nhấn nút "Đặt Vé"
+          document
+            .querySelectorAll(".movie-card button")
+            .forEach((button, index) => {
+              const movieInfo = [
+                {
+                  title: "Red One: Mật Mã Đỏ",
+                  description: "Hành Động, Tội Phạm",
+                  price: "100,000 VNĐ",
+                },
+                {
+                  title: "Venom: Kèo Cuối",
+                  description: "Hành Động, Viễn Tưởng",
+                  price: "120,000 VNĐ",
+                },
+                // Thêm các phim khác ở đây
+              ];
+
+              button.addEventListener("click", () => {
+                const movie = movieInfo[index];
+                openModal(movie.title, movie.description, movie.price);
+              });
+            });
+        </script>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 MovieMaster. All rights reserved.</p>
+    </footer>
+
+    <script>
+      function startBooking() {
+        document.querySelector(".movie-section").classList.add("hidden");
+        document.getElementById("seat-selection").classList.remove("hidden");
+      }
+
+      function selectSeat(seat) {
+        seat.classList.toggle("selected");
+      }
+
+      function proceedToBooking() {
+        document.getElementById("seat-selection").classList.add("hidden");
+        document.getElementById("booking-form").classList.remove("hidden");
+      }
+
+      function submitBooking(event) {
+        event.preventDefault();
+        document.getElementById("booking-form").classList.add("hidden");
+        document.getElementById("payment-form").classList.remove("hidden");
+      }
+
+      function submitPayment(event) {
+        event.preventDefault();
+        document.getElementById("payment-form").classList.add("hidden");
+        document.getElementById("success-message").classList.remove("hidden");
+      }
+    </script>
+  </body>
+</html>
